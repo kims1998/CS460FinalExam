@@ -1,7 +1,7 @@
 # The Torchbearer
 
-**Student Name:** ___________________________
-**Student ID:** ___________________________
+**Student Name:** Charles Kim
+**Student ID:** 133161532
 **Course:** CS 460 – Algorithms | Spring 2026
 
 > This README is your project documentation. Write it the way a developer would document
@@ -113,7 +113,7 @@ _Your answer here._
 
 ### What the Algorithm Must Explore
 
-> One bullet. Must use the word "order."
+> One bullet point. Must use the word "order."
 
 - _Your answer here._
 
@@ -146,7 +146,7 @@ _Your answer here._
 
 ### Part 5c: Worst-Case Search Space
 
-> Two bullets.
+> Two bullet points.
 
 - **Worst-case number of orders considered:** _Your answer (in terms of k)._
 - **Why:** _One-line justification._
@@ -157,7 +157,7 @@ _Your answer here._
 
 ### Part 6a: Best-So-Far Tracking
 
-> Three bullets.
+> Three bullet points.
 
 - **What is tracked:** _Your answer here._
 - **When it is used:** _Your answer here._
@@ -165,7 +165,7 @@ _Your answer here._
 
 ### Part 6b: Lower Bound Estimation
 
-> Three bullets.
+> Three bullet points.
 
 - **What information is available at the current state:** _Your answer here._
 - **What the lower bound accounts for:** _Your answer here._
@@ -173,7 +173,7 @@ _Your answer here._
 
 ### Part 6c: Pruning Correctness
 
-> One to two bullets. Explain why pruning is safe.
+> One to two bullet points. Explain why pruning is safe.
 
 - _Your answer here._
 
