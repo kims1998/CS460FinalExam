@@ -10,7 +10,7 @@
 
 ---
 
-## Entry 1 – [05/11/2026]: Initial Plan
+## Entry 1 – [05/10/2026]: Initial Plan
 
 > Required. Write this before writing any code. Describe your plan: what you will
 > implement first, what parts you expect to be difficult, and how you plan to test.
@@ -24,7 +24,7 @@ _For this project, my plan is to tackle it in two phases: First I'm going to pre
 > Required. At least one entry must describe a bug, wrong assumption, or design change
 > you encountered. Describe what went wrong and how you resolved it.
 
-_Your entry here._
+_**May 10**: Bug I came across was forgetting to handle nodes that appear only as edge destinations, never as keys in the graph dictionary. Since `run_dijkstra()` initializes `dist` only from `graph.keys()`, those destination-only nodes never get an entry in the inner dictionary. This means `.get(node, float('inf'))` returns `inf` even for reachable nodes, causing `_explore` to silently skip valid paths and return the wrong cost. This was resolved by collecting all nodes from both keys and edge targets before initializing `dist`, ensuring every reachable node starts with a proper `float('inf')` entry._
 
 ---
 
@@ -49,12 +49,12 @@ _Your entry here._
 
 | Part | Estimated Hours |
 |---|---|
-| Part 1: Problem Analysis | |
-| Part 2: Precomputation Design | |
-| Part 3: Algorithm Correctness | |
-| Part 4: Search Design | |
-| Part 5: State and Search Space | |
-| Part 6: Pruning | |
-| Part 7: Implementation | |
-| README and DEVLOG writing | 10 minutes working on initial set up |
-| **Total** | |
+| Part 1: Problem Analysis        | 70 minutes |
+| Part 2: Precomputation Design   | 125 minutes |
+| Part 3: Algorithm Correctness   | 0 minutes |
+| Part 4: Search Design           | 0 minutes |
+| Part 5: State and Search Space  | 0 minutes |
+| Part 6: Pruning                 | 0 minutes |
+| Part 7: Implementation          | 0 minutes |
+| README and DEVLOG writing       | 50 minutes |
+| **Total**                       | 245 minutes |

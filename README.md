@@ -16,14 +16,14 @@
 > Document why this problem is not just a shortest-path problem. Three bullet points, one
 > per question. Each bullet should be 1-2 sentences max.
 
-- **Why a single shortest-path run from S is not enough:**
-  _Your answer here._
+- **Why a single shortest-path run from S is not enough:** \
+  _Dijkstra from S yields the cheapest path to every individual node, but cannot decide the order in which to visit the relic chambers. Different orderings produce different total costs and Dijkstra has no way to compare them._
 
-- **What decision remains after all inter-location costs are known:**
-  _Your answer here._
+- **What decision remains after all inter-location costs are known:** \
+  _The ordering decision remains after all inter-location costs are known. Which sequence to visit the relic chambers so that the sum of the pairwise inter-location costs is minimized._
 
-- **Why this requires a search over orders (one sentence):**
-  _Your answer here._
+- **Why this requires a search over orders (one sentence):** \
+  _The total fuel depends on the chosen sequence of relics, so the engine must search the space of possible orderings and cannot compute the answer with a single closed-form calculation._
 
 ---
 
@@ -35,8 +35,8 @@
 
 | Source Node Type | Why it is a source |
 |---|---|
-| _node type_ | _one-line reason_ |
-| _node type_ | _one-line reason_ |
+| _Spawn (S)_ | _The Torchbearer departs from S first, so we need cheapest distance from S to every relic and to the exit._ |
+| _Each Relic Node (R<sub>1</sub>, ..., R<sub>k</sub>)_ | _After collecting a relic, the Torchbearer departs from it toward the next relic or the exit, so we need outgoing distances from every relic._ |
 
 ### Part 2b: Distance Storage
 
@@ -44,20 +44,20 @@
 
 | Property | Your answer |
 |---|---|
-| Data structure name | |
-| What the keys represent | |
-| What the values represent | |
-| Lookup time complexity | |
-| Why O(1) lookup is possible | |
+| Data structure name | Nested dictionary (`dict[node, dict[node, float]]`). |
+| What the keys represent | Source node (outer key) and destination node (inner key). |
+| What the values represent | Minimum fuel cost (shortest-path distance) from the source to the destination. `float('inf')` if unreachable. |
+| Lookup time complexity | O(1) average |
+| Why O(1) lookup is possible | Python dictionaries are hash maps, so key hashing gives constant-time average access for both the outer and inner lookups. |
 
 ### Part 2c: Precomputation Complexity
 
 > State the total complexity and show the arithmetic. Two to three lines max.
 
-- **Number of Dijkstra runs:** _your answer_
-- **Cost per run:** _your answer_
-- **Total complexity:** _your answer_
-- **Justification (one line):** _your answer_
+- **Number of Dijkstra runs:** _k + 1 (one run per relic plus one run from spawn)._
+- **Cost per run:** _O(m logn) where n=| V |, m=| E |._
+- **Total complexity:** _O((k + 1)⋅ m logn) = O(k ⋅ m logn)._
+- **Justification (one line):** _We run one independent Dijkstra from each of the k + 1 source nodes; each run processes every edge at most once with a log-n priority queue operation, giving O(m logn) per run._
 
 ---
 
