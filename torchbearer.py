@@ -2,8 +2,8 @@
 CS 460 – Algorithms: Final Programming Assignment
 The Torchbearer
 
-Student Name: ___________________________
-Student ID:   ___________________________
+Student Name: Charles Kim
+Student ID:   133161532
 
 INSTRUCTIONS
 ------------
@@ -34,7 +34,14 @@ def explain_problem():
 
     TODO
     """
-    return "TODO"
+    return (
+        "1. Dijkstra from S yields the cheapest path to every individual node, but cannot decide the order in which to visit "
+        "the relic chambers. Different orderings produce different total costs and Dijkstra has no way to compare them. \n\n"
+        "2. The ordering decision remains after all inter-location costs are known. Which sequence to visit the relic chambers"
+        "so that the sum of the pairwise inter-location costs is minimized. \n\n"
+        "3. The total fuel depends on the chosen sequence of relics, so the engine must search the space of possible orderings"
+        "and cannot compute the answer with a single closed-form calculation."
+    )
 
 
 # =============================================================================
@@ -56,7 +63,12 @@ def select_sources(spawn, relics, exit_node):
 
     TODO
     """
-    pass
+    sources = set()
+    sources.add(spawn)
+
+    for r in relics:
+        sources.add(r)
+    return list(sources)
 
 
 def run_dijkstra(graph, source):
@@ -75,7 +87,28 @@ def run_dijkstra(graph, source):
 
     TODO
     """
-    pass
+    # Initialize every node as unreachable.
+    dist = {node: float('inf') for node in graph}
+    dist[source] = 0
+
+    # Min-heap entries: (current_best_cost, node)
+    heap = [(0, source)]
+
+    while heap:
+        cost_u, u = heapq.heappop(heap)
+
+        # Skip stale heap entries (a shorter path was already finalized)
+        if cost_u > dist[u]:
+            continue
+
+        for v, edge_cost in graph.get(u, []):
+            new_cost = dist[u] + edge_cost
+
+            if new_cost < dist[v]:
+                dist[v] = new_cost
+                heapq.heappush(heap, (new_cost, v))
+
+    return dist
 
 
 def precompute_distances(graph, spawn, relics, exit_node):
@@ -95,7 +128,13 @@ def precompute_distances(graph, spawn, relics, exit_node):
 
     TODO
     """
-    pass
+    sources = select_sources(spawn, relics, exit_node)
+    dist_table = {}
+
+    for src in sources:
+        dist_table[src] = run_dijkstra(graph, src)
+    
+    return dist_table
 
 
 # =============================================================================
