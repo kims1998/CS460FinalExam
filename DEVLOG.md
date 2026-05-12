@@ -19,7 +19,7 @@ _For this project, my plan is to tackle it in two phases: First I'm going to pre
 
 ---
 
-## Entry 2 – [Date]: [Short description]
+## Entry 2 – [5/11/2026]: [Short description]
 
 > Required. At least one entry must describe a bug, wrong assumption, or design change
 > you encountered. Describe what went wrong and how you resolved it.
@@ -51,10 +51,10 @@ _Your entry here._
 |---|---|
 | Part 1: Problem Analysis        | 70 minutes |
 | Part 2: Precomputation Design   | 125 minutes |
-| Part 3: Algorithm Correctness   | 0 minutes |
+| Part 3: Algorithm Correctness   | 150 minutes |
 | Part 4: Search Design           | 0 minutes |
 | Part 5: State and Search Space  | 0 minutes |
 | Part 6: Pruning                 | 0 minutes |
 | Part 7: Implementation          | 0 minutes |
 | README and DEVLOG writing       | 50 minutes |
-| **Total**                       | 245 minutes |
+| **Total**                       | 395 minutes |

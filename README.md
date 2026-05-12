@@ -72,29 +72,29 @@
 > Do not copy the invariant text from the spec.
 
 - **For nodes already finalized (in S):**
-  _Your answer here._
+  _Every node that has been extracted from the priority queue has its distance premanently set to the true shortest-path cost from the soruce, this means that nothing in the remaining graph can produce a cheaper route to it._
 
 - **For nodes not yet finalized (not in S):**
-  _Your answer here._
+  _`dist[u]` holds the length of the best path discovered SO FAR, whose intermediate vertices all belong to S, so it is a valid upper bound that may be still be improved as more nodes are finalized._
 
 ### Part 3b: Why Each Phase Holds
 
 > One to two bullets per phase. Maintenance must mention nonnegative edge weights.
 
 - **Initialization : why the invariant holds before iteration 1:**
-  _Your answer here._
+  _S is empty and `dist[source] = 0` is the correct zero-length path with no internal nodes. Every other node starts at `float('inf')`, correctly reflecting that no path through S has been found yet._
 
 - **Maintenance : why finalizing the min-dist node is always correct:**
-  _Your answer here._
+  _The node u, extracted next has the smallest `dist[u]` among all non-finalized nodes. This is because all edge weights are nonnegative and any alternative path to u that routes through a non-finalized node v must cost at least `dist[v] ≥ dist[u]`, so it cannot be cheaper. Therefore, `dist[u]` is already optimal and adding u to S maintains the invariant._
 
 - **Termination : what the invariant guarantees when the algorithm ends:**
-  _Your answer here._
+  _When the heap is empty, every reachable node has been added to S, so the invariant guarantees that `dist[v]` equals the true shortest-path distance from the source to every reachable node v. Any unreachable nodes retain `float('inf')`._
 
 ### Part 3c: Why This Matters for the Route Planner
 
 > One sentence connecting correct distances to correct routing decisions.
 
-_Your answer here._
+_If any distance in `dist_table` were incorrect, the route planner might choose a suboptimal ordering or wrongly declare a reachable exit unreachable, which would make the Torchbearer waste fuel or fail entirely._
 
 ---
 

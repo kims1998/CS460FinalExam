@@ -151,7 +151,28 @@ def dijkstra_invariant_check():
 
     TODO
     """
-    return "TODO"
+    return (
+        "3a. Every node that has been extracted from the priority queue has its distance premanently set"
+        "to the true shortest-path cost from the soruce, this means that nothing in the remaining graph"
+        "can produce a cheaper route to it.\n\n"
+        "3a. dist[u] holds the length of the best path discovered SO FAR, whose intermediate vertices all"
+        "belong to S, so it is a valid upper bound that may be still be improved as more nodes are finalized.\n\n\n"
+  
+        "3b. S is empty and dist[source] = 0 is the correct zero-length path with no internal nodes."
+        "Every other node starts at float('inf'), correctly reflecting that no path through S has"
+        "been found yet. \n\n"
+        "3b. The node u, extracted next has the smallest dist[u] among all non-finalized nodes. This"
+        "is because all edge weights are nonnegative and any alternative path to u that routes through"
+        "a non-finalized node v must cost at least dist[v] ≥ dist[u], so it cannot be cheaper. Therefore,"
+        "dist[u] is already optimal and adding u to S maintains the invariant. \n\n"
+        "3b When the heap is empty, every reachable node has been added to S, so the invariant guarantees"
+        "that dist[v] equals the true shortest-path distance from the source to every reachable node v."
+        "Any unreachable nodes retain float('inf').\n\n\n"
+
+        "3c. If any distance in dist_table were incorrect, the route planner might choose a suboptimal"
+        "ordering or wrongly declare a reachable exit unreachable, which would make the Torchbearer waste"
+        "fuel or fail entirely."
+    )
 
 
 # =============================================================================
