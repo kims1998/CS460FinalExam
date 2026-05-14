@@ -128,9 +128,11 @@ def precompute_distances(graph, spawn, relics, exit_node):
 
     TODO
     """
+    # Determine which nodes we need to outgoing distances from.
     sources = select_sources(spawn, relics, exit_node)
     dist_table = {}
 
+    # Rune one Dijkstra per source and store the full distance map.
     for src in sources:
         dist_table[src] = run_dijkstra(graph, src)
     
@@ -232,10 +234,13 @@ def find_optimal_route(dist_table, spawn, relics, exit_node):
 
     TODO
     """
+    # Using a mutable list so _explore can update it in place across all recursive calls.
     best = [float('inf'), []]
 
+    # Convert to a set so membership checks and removal during backtracking are O(1)
     relics_remaining = set(relics)
 
+    # Depth-first branch and bound search from the spawn.
     _explore(
         dist_table = dist_table,
         current_loc = spawn,
@@ -270,7 +275,6 @@ def _explore(dist_table, current_loc, relics_remaining, relics_visited_order,
     None
         Updates best in place.
 
-    TODO
     Implement: base case, pruning, recursive case, backtracking.
 
     REQUIRED: Add a 1-2 sentence comment near your pruning condition
