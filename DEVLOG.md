@@ -28,22 +28,22 @@ _**May 10**: Bug I came across was forgetting to handle nodes that appear only a
 
 ---
 
-## Entry 3 – [Date]: [Short description]
+## Entry 3 – [5/13/2026]: [Short description]
 
-_Your entry here._
+_Got the core recursion working, but initially forgot to undo the set mutation after each recursive call, so `relics_remaining` was permanently shrinking across branches. Adding `relics_remaing.add(relic)` after the recursive call (backtracking) fixed it. I also verified the lower bound using only the minimum next-hop distance (which was admissible, but loose). This was sufficient for correctness and cuts enough branches on the provided tests that all four pass cleanly._
 
 ---
 
-## Entry 4 – [Date]: Post-Implementation Reflection
+## Entry 4 – [5/14/2026]: Post-Implementation Reflection
 
 > Required. Written after your implementation is complete. Describe what you would
 > change or improve given more time.
 
-_Your entry here._
+_The implementation is complete and all five provided tests pass. Given more time I would tighten the lower bound by computing a minimum spanning tree estimate over the remaining relics rather than just the single cheapest next hop. This would prune far more branches on large relic sets. I'd also add property based tests with randomly generated directed graphs to catch edge cases like duplicate relic nodes or disconnected components. Finally I'd add recursion-depth guard or convert `_explore` to an interative stack to avoid Python's default recursion limit on inputs with many relics. I would also learn Python further because I been learning as I go with this course, since I didn't know Python._
 
 ---
 
-## Final Entry – [Date]: Time Estimate
+## Final Entry – [05/14/2026]: Time Estimate
 
 > Required. Estimate minutes spent per part. Honesty is expected; accuracy is not graded.
 
@@ -53,8 +53,8 @@ _Your entry here._
 | Part 2: Precomputation Design   | 125 minutes |
 | Part 3: Algorithm Correctness   | 150 minutes |
 | Part 4: Search Design           | 100 minutes |
-| Part 5: State and Search Space  | 0 minutes |
-| Part 6: Pruning                 | 0 minutes |
-| Part 7: Implementation          | 0 minutes |
-| README and DEVLOG writing       | 50 minutes |
-| **Total**                       | 495 minutes |
+| Part 5: State and Search Space  | 180 minutes |
+| Part 6: Pruning                 | 150 minutes |
+| Part 7: Implementation          | 90 minutes |
+| README and DEVLOG writing       | 110 minutes |
+| **Total**                       | 975 minutes |

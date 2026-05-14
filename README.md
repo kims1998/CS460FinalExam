@@ -132,9 +132,9 @@ _If any distance in `dist_table` were incorrect, the route planner might choose 
 
 | Component | Variable name in code | Data type | Description |
 |---|---|---|---|
-| Current location | | | |
-| Relics already collected | | | |
-| Fuel cost so far | | | |
+| Current location | `current_loc` | node (any hashable type) | The dungeon node where the Torchbearer currently stands. |
+| Relics already collected | `relics_visited_order` / `relics_remaining` | `list[node]` / `set[node]` | `relic_visited_order` records collection order and `relics_remaining` tracks what is still needed. |
+| Fuel cost so far | `cost_so_far` | `float` | Accumulated torch fuel burned to reach `current_loc` on the current partial route. |
 
 ### Part 5b: Data Structure for Visited Relics
 
@@ -142,18 +142,18 @@ _If any distance in `dist_table` were incorrect, the route planner might choose 
 
 | Property | Your answer |
 |---|---|
-| Data structure chosen | |
-| Operation: check if relic already collected | Time complexity: |
-| Operation: mark a relic as collected | Time complexity: |
-| Operation: unmark a relic (backtrack) | Time complexity: |
-| Why this structure fits | |
+| Data structure chosen | `set` (Python built-in hash set), used as `relics_remaining`. |
+| Operation: check if relic already collected | Time complexity: O(1) average, relic not in `relics_remaining`. |
+| Operation: mark a relic as collected | Time complexity: O(1) average, `relics_remaining.remove(relic)`. |
+| Operation: unmark a relic (backtrack) | Time complexity: O(1) average, `relics_remaining.add(relic)`. |
+| Why this structure fits | All three critical operations (check, add, remove) are O(1) average in a hash set, keeping the overhead per recursive call constant regardless of how many relics there are.|
 
 ### Part 5c: Worst-Case Search Space
 
 > Two bullet points.
 
-- **Worst-case number of orders considered:** _Your answer (in terms of k)._
-- **Why:** _One-line justification._
+- **Worst-case number of orders considered:** _O(k!) where k = |M|._
+- **Why:** _In the worst case, the algorithm must try all permutations of k relics. The number of permutations of k items is k!, so the search tree has at most k! leaves._
 
 ---
 
@@ -163,23 +163,23 @@ _If any distance in `dist_table` were incorrect, the route planner might choose 
 
 > Three bullet points.
 
-- **What is tracked:** _Your answer here._
-- **When it is used:** _Your answer here._
-- **What it allows the algorithm to skip:** _Your answer here._
+- **What is tracked:** _A mutable list `best = [best_cost, best_order]` shared across all recursive calls. `best[0]` is the total fuel of the cheapest complete valid route found so far, and `best[1]` is the corresponding relic ordering._
+- **When it is used:** _At the start of every call to `_explore`, before expanding any child, the algorithm computes a lower bound on the cost of completing the current partial route and compares it to `best[0]`._
+- **What it allows the algorithm to skip:** _Any partial route whose optimisitc lower bound is ≥ `best[0]` is abandoned immediately. The entire subtree of completions rooted at that state is never generated._
 
 ### Part 6b: Lower Bound Estimation
 
 > Three bullet points.
 
-- **What information is available at the current state:** _Your answer here._
-- **What the lower bound accounts for:** _Your answer here._
-- **Why it never overestimates:** _Your answer here._
+- **What information is available at the current state:** _The algorithm knows `cost_so_far`, the `current_loc`, and the set of `relics_remaining`, plus the full `dist_table` of precomputed pairwise shortest-path costs._
+- **What the lower bound accounts for:** _When relics remain, the bound adds the minimum travel cost from `current_loc` to any remaining relic. When no relics remain, it adds the cost from `current_loc` directly to the exit._
+- **Why it never overestimates:** _The minimum-next-hop distance is a lower bound because the Torchbearer must travel at least that far before it can make any further progress. The actual remaining cost (visiting all relics plus reaching the exit) can only be greater than or equal._
 
 ### Part 6c: Pruning Correctness
 
 > One to two bullet points. Explain why pruning is safe.
 
-- _Your answer here._
+- _Pruning is safe because the lower bound never overestimates: if `lower_bound ≥ best[0]`, then every possible completion of the current partial route costs at least `best[0]`, so none of them can strictly improve the best solution. The optimal route, if it passes through this state, would have a lower bound strictly less than its own total cost, which in turn would be strictly less than `best[0]`, so a contradiction. Therefore, the optimal route is never in a subtree that gets pruned._
 
 ---
 
@@ -187,4 +187,4 @@ _If any distance in `dist_table` were incorrect, the route planner might choose 
 
 > Bullet list. If none beyond lecture notes, write that.
 
-- _Your references here._
+- _Lecture Notes Only._
