@@ -189,7 +189,23 @@ def explain_search():
 
     TODO
     """
-    return "TODO"
+    return (
+        "The failure mode: Always advancing to the nearest unvisited relic ignores the downstream cost"
+        "of reaching subsequent relics and the exit from that chosen relic. \n\n"
+        "Counter-example setup: Using the spec illustration: S → B costs 1, S → C costs 2, S → D costs 2;"
+        "B → D costs 1, D → C costs 1, C → B costs 1; B → T and C → T costs 1; T costs 100. \n\n"
+        "What greedy picks: From S greedy picks B (nearest, cost 1). From B it picks D (cost 1). From D"
+        "the only unvisited relic is C (cost 1). Then C → T costs 1. Total = 4. (Greedy is lucky here; "
+        "swap D → T to 1 and C → T to 100 and greedy's last stop would be C, forcing C → T = 100). \n\n"
+        "What optimal picks: The optimal algorithm evaluates all 6 orderings of {B, C, D} and selects the"
+        "one that minimizes total fuel, even if the first step is not the cheapest available. \n\n"
+        "Why greedy loses: A cheap first move can strand the Torchbearer at a node with expensive onward"
+        "edges, inflating the total cost beyond what a slightly more expensive first move would have produced.\n\n\n"
+
+        "The algorithm must explore every possible order in which the relic chambers can be visited, using"
+        "branch-and-bound pruning to abandon any partial order whose optimisitc lower bound cannot beat the"
+        "best complete order found so far."
+    )
 
 
 # =============================================================================

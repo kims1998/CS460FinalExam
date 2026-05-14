@@ -105,17 +105,21 @@ _If any distance in `dist_table` were incorrect, the route planner might choose 
 > State the failure mode. Then give a concrete counter-example using specific node names
 > or costs (you may use the illustration example from the spec). Three to five bullets.
 
-- **The failure mode:** _Your answer here._
-- **Counter-example setup:** _Your answer here._
-- **What greedy picks:** _Your answer here._
-- **What optimal picks:** _Your answer here._
-- **Why greedy loses:** _Your answer here._
+- **The failure mode:** _Always advancing to the nearest unvisited relic ignores the downstream cost of reaching subsequent relics and the exit from that chosen relic._
+- **Counter-example setup:** _Using the spec illustration:_ \
+  _S → B costs 1, S → C costs 2, S → D costs 2;_ \
+  _B → D costs 1, D → C costs 1, C → B costs 1;_ \
+  _B → T and C → T costs 1;_ \
+  _T costs 100._
+- **What greedy picks:** _From S greedy picks B (nearest, cost 1). From B it picks D (cost 1). From D the only unvisited relic is C (cost 1). Then C → T costs 1. Total = 4. (Greedy is lucky here; swap D → T to 1 and C → T to 100 and greedy's last stop would be C, forcing C → T = 100)._
+- **What optimal picks:** _The optimal algorithm evaluates all 6 orderings of {B, C, D} and selects the one that minimizes total fuel, even if the first step is not the cheapest available._
+- **Why greedy loses:** _A cheap first move can strand the Torchbearer at a node with expensive onward edges, inflating the total cost beyond what a slightly more expensive first move would have produced._
 
 ### What the Algorithm Must Explore
 
 > One bullet point. Must use the word "order."
 
-- _Your answer here._
+- _The algorithm must explore every possible order in which the relic chambers can be visited, using branch-and-bound pruning to abandon any partial order whose optimisitc lower bound cannot beat the best complete order found so far._
 
 ---
 
